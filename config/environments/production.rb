@@ -29,6 +29,10 @@ SampleApp::Application.configure do
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
+  # アプリケーションへのすべてのアクセスをSSL経由にし、
+  # Strict-Transport-Securityを使用し、
+  # secure cookiesを使用する。
+  config.force_ssl = true
 
   # See everything in the log (default is :info)
   # config.log_level = :debug
