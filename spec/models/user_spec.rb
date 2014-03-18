@@ -36,6 +36,11 @@ describe User do
 	# 不正な値が入ってないか。クラス内のメソッドでテスト
   it { should be_valid }
 
+	# 記憶トークン用の情報
+  it { should respond_to(:password_confirmation) }
+  it { should respond_to(:remember_token) }
+  it { should respond_to(:authenticate) } 
+
 #############　ここからがテストコード本番　###############
 
 	#####  name　に関するテスト　#####
@@ -169,5 +174,14 @@ describe User do
 		before { @user.password = @user.password_confirmation = "a" * 5 }
 		it { should be_invalid }
 	end
+
+
+	############### トークンに関するテスト（8.2章） #####################
+
+	#  記憶トークンが有効である (空欄のない) ことをテストする。
+  describe "remember token" do
+    before { @user.save }
+    its(:remember_token) { should_not be_blank }
+  end
 
 end

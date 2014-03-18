@@ -13,10 +13,12 @@
 class User < ActiveRecord::Base
 	# ()に指定された属性を持つ。メンバ変数みたいなもの
   attr_accessible(:name, :email, :password, :password_confirmation)
+  has_secure_password
 
 	# emailの内容をすべて小文字にする
 	#アドレスは大文字・小文字区別しないので、一意性の確認のために、小文字で全部登録する。
 	before_save { |user| user.email = email.downcase }
+	before_save :create_remember_token
 
 	########### 制限をつけるメソッド ##############
 
@@ -67,5 +69,12 @@ class User < ActiveRecord::Base
   validates(
 		:password_confirmation,
 		presence: true)
+
+	###### トークンを覚えておく ######
+
+	private
+	  def create_remember_token
+	    self.remember_token = SecureRandom.urlsafe_base64
+	  end
 
 end
