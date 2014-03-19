@@ -22,6 +22,8 @@ describe "Authentication" do
 
       it { should have_selector('title', text: 'Sign in') }		# タイトルがサインインのままのこと（サインイン画面のままなこと）
       it { should have_selector('div.alert.alert-error', text: 'Invalid') } #エラーが表示されること
+	    it { should_not have_link('Profile') }	#　プロファイルのリンクが表示されないこと
+	    it { should_not have_link('Settings') }	# 設定へのリンクが表示されないこと
 
 			 # メッセージがずっと表示される既知のバグのテスト
 			 describe "after visiting another page" do
