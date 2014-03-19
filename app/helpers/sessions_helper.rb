@@ -22,4 +22,22 @@ module SessionsHelper
     self.current_user = nil
     cookies.delete(:remember_token)
   end
+
+	# 処理中のユーザ
+  def current_user
+    @current_user ||= User.find_by_remember_token(cookies[:remember_token])
+  end
+  def current_user?(user)
+    user == current_user
+  end
+
+	# フレンドリーフォワーディング（サインイン -> サインインしたユーザの編集画面、とかに正しく遷移すること）
+  def redirect_back_or(default)
+    redirect_to(session[:return_to] || default)
+    session.delete(:return_to)
+  end
+  def store_location
+    session[:return_to] = request.url
+  end
+
 end

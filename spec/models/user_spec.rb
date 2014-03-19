@@ -36,6 +36,11 @@ describe User do
 	# 不正な値が入ってないか。クラス内のメソッドでテスト
   it { should be_valid }
 
+	# 管理権限をもつユーザのテスト
+  it { should respond_to(:admin) }
+  it { should respond_to(:authenticate) }
+  it { should_not be_admin }
+
 	# 記憶トークン用の情報
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:remember_token) }
@@ -184,4 +189,14 @@ describe User do
     its(:remember_token) { should_not be_blank }
   end
 
+
+	############# 管理権限をもつユーザに関するテスト（9.4.1章） ####################
+  describe "with admin attribute set to 'true'" do
+    before do
+      @user.save!
+      @user.toggle!(:admin)
+    end
+
+    it { should be_admin }
+  end
 end
